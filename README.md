@@ -1,2 +1,3 @@
-# Ruby-and-AspectJ-COMP348-A-3
+# COMP348_assigment3
+
 Ruby and AspectJ

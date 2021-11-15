@@ -1,0 +1,142 @@
+class Shape
+    @@id = 0;
+    
+    def initialize
+        @@id += 1
+    end
+    
+    def perimiter
+       return nil
+    end
+    
+    def area
+        return nil 
+    end
+    
+    def print
+        if area != nil && perimiter != nil
+            puts "#{@@id}: #{self.class.name}, perimiter: #{perimiter}, area: #{area}"
+        else if perimiter == nil && area != nil
+            puts "#{@@id}: #{self.class.name}, perimiter: undefined, area: #{area}"
+        else if perimiter != nil && area == nil
+            puts "#{@@id}: #{self.class.name}, perimiter: #{perimiter}, area: undefined"
+        else
+            puts "#{@@id}: #{self.class.name}, perimiter: undefined, area: undefined"
+                end
+            end
+        end
+    end
+end
+
+class Circle < Shape
+    
+    def initialize(x)
+        @@id += 1
+        @radius = x
+    end
+    
+    def perimiter
+        if @radius < 0 || @radius == nil
+            return nil
+        else
+            return 2*3.14159265*@radius
+        end
+    end
+    
+    def area
+        if @radius < 0 || @radius == nil
+            return nil
+        else
+            return 3.14159265*@radius*@radius
+        end
+    end
+end
+
+class Ellipse < Shape
+    def initialize(a,b)
+        if a > b
+            @@id += 1
+            @a = a
+            @b = b
+        else
+            @@id += 1
+            @a = b
+            @b = a
+        end
+    end
+    
+    def area
+        if @a < 0 || @b < 0 || @a == nil || @b == nil
+            return nil
+        else
+            return 3.14159265*@a*@b
+        end
+    end
+    
+    def eccentricity
+        if 0 > ((@a*@a) - (@b*@b)) || @a == nil || @b == nil
+            return nil
+        else 
+            Math.sqrt((@a*@a) - (@b*@b))
+        end
+    end
+end
+
+class Rhombus < Shape
+    def initialize(d1,d2)
+        @@id += 1
+        @d1 = d1
+        @d2 = d2
+    end 
+    
+    def perimiter
+        if @d1 < 0 || @d2 < 0 || @d1 == nil || @d2 == nil
+            return nil
+        else    
+            return 2*Math.sqrt((@d1*@d1) + (@d2*@d2))
+        end
+    end
+    
+    def area
+        if @d1 < 0 || @d2 < 0 || @d1 == nil || @d2 == nil
+            return nil
+        else
+            return (@d1*@d2)/2
+        end
+    end
+    
+    def iradius
+        if  0 >= ((@d1*@d1) + (@d2*@d2)) || @d1 == nil || @d2 == nil
+           return nil
+        else
+            return (@d1*@d2)/(2*Math.sqrt((@d1*@d1) + (@d2*@d2)))
+        end
+    end
+end
+
+hashShapes = { "Circle(s)" => 0 , "Ellipse(s)" => 0 , "Rhombus(es)" => 0 , "Shapes" => 0};
+
+
+File.open("Shape.txt").each{
+    |line|
+    if line.split.first.eql?("shape") || line.split.first.eql?("Shape") 
+        hashShapes["Shapes"] = hashShapes["Shapes"] + 1
+    else if line.split.first.eql?("circle") || line.split.first.eql?("Circle") 
+        hashShapes["Shapes"] = hashShapes["Shapes"] + 1
+        hashShapes["Circle(s)"] = hashShapes["Circle(s)"] + 1
+    end
+    if line.split.first.eql?("ellipse") || line.split.first.eql?("Ellipse")
+        hashShapes["Shapes"] = hashShapes["Shapes"] + 1
+        hashShapes["Ellipse(s)"] =  hashShapes["Ellipse(s)"] + 1
+    end
+    if line.split.first.eql?("rhombus") || line.split.first.eql?("Rhombus")
+        hashShapes["Shapes"] = hashShapes["Shapes"] + 1
+        hashShapes["Rhombus(es)"] =  hashShapes["Rhombus(es)"] + 1
+    end
+end
+}
+
+
+hashShapes.each_pair do |key, value|
+    puts "#{key} : #{value}"
+end

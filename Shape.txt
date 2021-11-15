@@ -1,0 +1,11 @@
+shape
+rhombus 10 30
+circle -25
+ellipse 3 5
+shape 
+ellipse 100 20
+rhombus 8 5
+shape
+ellipse 5 7
+circle 7
+ellipse 6 8 

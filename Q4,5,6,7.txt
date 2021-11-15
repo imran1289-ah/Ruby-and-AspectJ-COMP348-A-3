@@ -1,0 +1,68 @@
+public privileged aspect Behavior {
+
+   //Q4
+    declare parents: Rectangle implements Shape;
+    declare parents: Circle implements Shape;
+
+    public String Rectangle.getName() {
+        return "Rectangle";
+    }
+    public String Circle.getName() {
+        return "Circle";
+    }
+    //Q5
+    public String Rectangle.toString() {
+        return getName()+"("+(int)this.width+", "+(int)this.height+")";
+    }
+    public String Circle.toString() {
+        return getName()+"("+(int)this.radius+")";
+    }
+    //Q6
+    pointcut areaFixing (Circle s):
+            execution(* Circle.getArea()) &&
+                    this(s);
+    double around(Circle s): areaFixing(s)
+    {
+        return 3.1416 * s.radius*s.radius ;
+    }
+
+    //Q7
+    pointcut negativeFixingRect (Rectangle s):
+            execution(* Rectangle.*()) && !within(Behavior)
+                    && this(s);
+    double around(Rectangle s): negativeFixingRect(s)
+            {
+                if(s.width<0||s.height<0) return 0;
+                else return proceed(s);
+            }
+
+    pointcut negativeFixingCircle (Circle s):
+            execution(* Circle.*()) && !within(Behavior)
+                    && this(s);
+    double around(Circle s): negativeFixingCircle(s)
+    {
+         if(s.radius<0) return 0;
+         else return proceed(s);
+    }
+    
+   // Q8
+	declare parents: Rectangle implements Identifiable;
+	declare parents: Circle implements Identifiable;
+
+	private static int counter = -1;
+	
+	pointcut countIncrement():
+		execution(Shape+.new(..)) && !within(Behavior);
+	
+	after() : countIncrement(){
+		counter += 1;
+	}
+
+	public int Rectangle.getId() {
+		return counter;
+	}
+
+	public int Circle.getId() {
+		return counter;
+	}
+}
